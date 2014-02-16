@@ -1,0 +1,454 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+/**
+ * Theme for reveal.js.
+ *
+ * Copyright (C) 2013 laysakura
+ */
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+body {
+}
+.reveal {
+  font-family      : "Open Sans", sans-serif;
+  font-size        : 36px;
+  font-weight      : 200;
+  letter-spacing   : 0em;
+  color            : #000;
+  background-color : #eeeeee;
+  background-image : url("../../img/cloth-bg.jpg");
+}
+::selection {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+::-moz-selection {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: 0 0 44px 0;
+  color: #333333;
+  font-family: sans-serif;
+  line-height: 0.9em;
+  letter-spacing: -0.08em;
+  text-shadow: none;
+}
+.reveal h1 {
+    font-size: 150%;
+}
+.reveal h2 {
+    font-size: 200%;
+}
+
+
+/*********************************************
+ * LINKS
+ *********************************************/
+a {
+    color               : #d7523d;
+    text-decoration     : none;
+    border-bottom       : 1px solid #f8b4a8;
+    transition-property : all;
+    transition          : 0.2s linear;
+}
+a:visited {
+    color: #c10020;
+}
+a:hover {
+    background-color : #d7523d;
+    color            : #ffffff;
+    border-bottom    : none;
+    border-radius    : 4px;
+}
+a:hover:visited {
+    background-color : #c10020;
+    border-radius    : 4px;
+}
+
+/*********************************************
+ * LISTS
+ *********************************************/
+.reveal ul li {
+    list-style-type : disc;
+    margin          : 0.2em 0 0.2em 0;
+}
+
+/*********************************************
+ * CODES
+ *********************************************/
+.reveal code {
+    font-size        : 90%;
+    margin           : 0 2px;
+    padding          : 0 5px;
+    border           : 1px solid rgba(0, 0, 0, 0.08);
+    background-color : rgba(0, 0, 0, 0.03);
+    border-radius    : 6px;
+    font-family      : 'Monaco', 'Consolas', 'Courier New', Courier, monospace, sans-serif;
+}
+.reveal pre code {
+    padding : 0 auto;
+    margin  : 0 auto;
+    border  : none;
+
+    display            : block;
+    padding            : 5px;
+    background-color   : rgba(255, 255, 255, 0.5);
+    color              : #000;
+    font-family        : Courier, monospace, sans-serif;
+    box-shadow       : 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-transition : all 0.3s linear;
+    -moz-transition    : all 0.3s linear;
+    transition         : all 0.3s linear;
+}
+pre code:hover {
+    box-shadow: 0 0 6px rgba(255, 255, 0, 0.8);
+}
+pre .keyword,
+pre .tag,
+pre .css .class,
+pre .css .id,
+pre .lisp .title,
+pre .nginx .title,
+pre .request,
+pre .status,
+pre .clojure .attribute {
+  color: #00A0B0;
+}
+pre .number,
+pre .date {
+  color: #CC333F;
+}
+pre .shebang,
+pre .diff .addition,
+pre .comment,
+pre .java .annotation,
+pre .template_comment,
+pre .pi,
+pre .doctype {
+  color: #45B312;
+}
+pre .dos .keyword,
+pre .python .decorator,
+pre .title,
+pre .haskell .type,
+pre .diff .header,
+pre .ruby .class .parent,
+pre .apache .tag,
+pre .nginx .built_in,
+pre .tex .command,
+pre .prompt {
+    color: #F38733;
+}
+pre .dos .envvar,
+pre .dos .stream,
+pre .variable,
+pre .apache .sqbracket {
+  color: #F38733;
+}
+
+pre .django .template_tag,
+pre .django .variable,
+pre .django .filter .argument {
+  color: #DCDCDC;
+}
+pre .dos .flow,
+pre .diff .change,
+pre .python .exception,
+pre .python .built_in,
+pre .literal,
+pre .tex .special {
+  color: #EFEFAF;
+}
+pre .diff .chunk,
+pre .subst {
+  color: #8F8F8F;
+}
+pre .dos .winutils,
+pre .ruby .symbol,
+pre .ruby .symbol .string,
+pre .ruby .string {
+  color: #DCA3A3;
+}
+pre .diff .deletion,
+pre .string,
+pre .tag .value,
+pre .preprocessor,
+pre .built_in,
+pre .sql .aggregate,
+pre .javadoc,
+pre .smalltalk .class,
+pre .smalltalk .localvars,
+pre .smalltalk .array,
+pre .css .rules .value,
+pre .attr_selector,
+pre .pseudo,
+pre .apache .cbracket,
+pre .tex .formula {
+  color: #CC9393;
+}
+pre .coffeescript .javascript,
+pre .javascript .xml,
+pre .tex .formula,
+pre .xml .javascript,
+pre .xml .vbscript,
+pre .xml .css,
+pre .xml .cdata {
+  opacity: 0.5;
+}
+
+/*********************************************
+ * TABLES
+ *********************************************/
+.reveal table {
+    border-spacing : 0;
+    margin         : 0 auto 0 auto;
+    font-size      : 80%;
+}
+.reveal table th {
+    background-color : #d7523d;
+    opacity          : 0.7;
+    color            : #fff;
+    text-shadow      : none;
+    padding          : 0 1em 0 1em;
+}
+.reveal th:first-child {
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+}
+.reveal th:last-child {
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
+}
+.reveal table tbody tr:hover
+{
+    background: rgba(255, 0, 0, 0.1);
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+.reveal tbody tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.4);
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+}
+.reveal tbody tr:nth-child(even) {
+    background-color: rgba(220, 220, 220, 0.4);
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+}
+.reveal td {
+    padding: 0 1em 0 1em;
+}
+
+/*********************************************
+ * IMAGES
+ *********************************************/
+.reveal section img {
+ /* margin: 15px 0px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #333333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  -webkit-transition: all .2s linear;
+  -moz-transition: all .2s linear;
+  -ms-transition: all .2s linear;
+  -o-transition: all .2s linear;
+  transition: all .2s linear; */
+}
+
+.reveal a:hover img {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #3b759e;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+}
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+.reveal .controls {
+    left   : 10px;
+    bottom : 10px;
+}
+.reveal .controls div.navigate-left,
+.reveal .controls div.navigate-left.enabled {
+    border-right-color: #d7523d;
+}
+.reveal .controls div.navigate-right,
+.reveal .controls div.navigate-right.enabled {
+    border-left-color: #d7523d;
+}
+.reveal .controls div.navigate-up,
+.reveal .controls div.navigate-up.enabled {
+    border-bottom-color: #d7523d;
+}
+.reveal .controls div.navigate-down,
+.reveal .controls div.navigate-down.enabled {
+    border-top-color: #d7523d;
+}
+
+.reveal .controls div.navigate-left.enabled:hover {
+    -webkit-animation-name            : pulse;
+    -webkit-animation-duration        : 0.3s;
+    -webkit-animation-iteration-count : infinite;
+    -webkit-animation-timing-function : ease-in-out;
+    -webkit-animation-direction       : alternate;
+    -webkit-animation-delay           : 0s;
+}
+.reveal .controls div.navigate-right.enabled:hover {
+    -webkit-animation-name            : pulse;
+    -webkit-animation-duration        : 0.3s;
+    -webkit-animation-iteration-count : infinite;
+    -webkit-animation-timing-function : ease-in-out;
+    -webkit-animation-direction       : alternate;
+    -webkit-animation-delay           : 0s;
+}
+.reveal .controls div.navigate-up.enabled:hover {
+    -webkit-animation-name            : pulse;
+    -webkit-animation-duration        : 0.3s;
+    -webkit-animation-iteration-count : infinite;
+    -webkit-animation-timing-function : ease-in-out;
+    -webkit-animation-direction       : alternate;
+    -webkit-animation-delay           : 0s;
+}
+.reveal .controls div.navigate-down.enabled:hover {
+    -webkit-animation-name            : pulse;
+    -webkit-animation-duration        : 0.3s;
+    -webkit-animation-iteration-count : infinite;
+    -webkit-animation-timing-function : ease-in-out;
+    -webkit-animation-direction       : alternate;
+    -webkit-animation-delay           : 0s;
+}
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.reveal .progress span {
+  background: #3b759e;
+  -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  -ms-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  -o-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+}
+
+
+.reveal p {
+    line-height: 1.2em;
+    margin-bottom: 10px;
+}
+
+/*********************************************
+ * FOOTER
+ *********************************************/
+footer {
+    clear     : both;
+    font-size : 120%;
+    height    : 57px;
+    display   : block;
+    position  : absolute;
+    bottom    : 0;
+    width     : 100%;
+}
+footer div {
+    margin     : 0 auto;
+    text-align : center;
+}
+footer .slidenumber {
+    margin              : -60px 15px 0 auto;
+    padding             : 40px 20px 0px 20px;
+    height              : 57px;
+    width               : 57px;
+    border-radius       : 100%;
+    background-color    : #d7523d;
+    opacity             : 0.8;
+    color               : #ffffff;
+}
+
+/*********************************************
+ * DECORATION
+ *********************************************/
+@-webkit-keyframes pulse {
+    from {
+        opacity: 1.0;
+    }
+    to {
+        opacity: 0.2;
+    }
+}
+.blinking {
+    -webkit-animation-name            : pulse;
+    -webkit-animation-duration        : 0.3s;
+    -webkit-animation-iteration-count : infinite;
+    -webkit-animation-timing-function : ease-in-out;
+    -webkit-animation-direction       : alternate;
+    -webkit-animation-delay           : 0s;
+}
+
+
+/**/
+ul.inline-list{
+  list-style: none;
+  display: block;
+}
+
+ul.inline-list li{
+  float: left;
+  clear: none;
+  width: 168px;
+  list-style-type: none;
+}
+
+
+ul.inline-list img{
+  vertical-align: text-top;
+  height: 113px;
+}
+
+ul.inline-list-logo {
+  list-style: none !important;
+  display: block;
+}
+
+ul.inline-list-logo li{
+  float: left;
+  clear: none;
+  width: 230px;
+  padding-bottom: 20px;
+}
+
+ul.inline-list-logo li small{
+  line-height: 42px;
+}
+
+
+
+
+ul.inline-list-logo img{
+  vertical-align: text-top;
+  border: 2px solid #fff;
+}
+
+ul.inline-list-logo img.liup{
+  border: 2px solid #8ea608;
+}
+
+small.liup{
+  color: #8ea608;
+  font-size: 15px;
+  margin-top: 10px
+}

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>XSS</title>
+
+    <meta name="author" content="@laysakura">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/laysakura.css" id="theme">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section data-markdown="slides.md"
+                 data-separator="^---"
+                 data-vertical="^\n\n"
+                 data-notes="^Note:"
+                 data-charset="UTF-8">
+        </section>
+
+      </div>
+    </div>
+
+    <footer>
+      <div class="slidenumber"></div>
+    </footer>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <!-- adds page number onto .slidenumber -->
+    <script>
+function slidenumber(event){
+  var totalslides = document.querySelectorAll( '.reveal .slides section:not(.stack)' ).length;
+  var current_slide = 0;
+
+  var horizontal_slides = document.querySelectorAll( '.reveal .slides>section' );
+  for (var i = 0; i < event.indexh; i++) {
+    // get subslides
+    var subslides = horizontal_slides[i].querySelectorAll('section');
+
+    // if subslides.length is 0, add 1 for horizontal slide, else add subslides.length
+    current_slide += (subslides.length === 0) ? 1 : subslides.length;
+  }
+
+  current_slide += event.indexv+1;
+  return current_slide.toString()+"/"+totalslides.toString();
+}
+
+Reveal.addEventListener('slidechanged', function(event){
+  document.querySelector(".slidenumber").innerText=slidenumber(event);
+});
+Reveal.addEventListener('ready', function(event){
+  document.querySelector(".slidenumber").innerText=slidenumber(event);
+});
+    </script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+
+      // Display controls in the bottom right corner
+      controls: true,
+
+      // Display a presentation progress bar
+      progress: true,
+
+      // Push each slide change to the browser history
+      history: false,
+
+      // Enable keyboard shortcuts for navigation
+      keyboard: true,
+
+      // Enable touch events for navigation
+      touch: true,
+
+      // Enable the slide overview mode
+      overview: true,
+
+      // Vertical centering of slides
+      center: true,
+
+      // Loop the presentation
+      loop: false,
+
+      // Change the presentation direction to be RTL
+      rtl: false,
+
+      // Number of milliseconds between automatically proceeding to the
+      // next slide, disabled when set to 0, this value can be overwritten
+      // by using a data-autoslide attribute on your slides
+      autoSlide: 0,
+
+      // Enable slide navigation via mouse wheel
+      mouseWheel: false,
+
+      // Transition style
+      transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+      // Transition speed
+      transitionSpeed: 'default', // default/fast/slow
+
+      // Transition style for full page backgrounds
+      backgroundTransition: 'default',  // default/linear/none
+
+      // Theme
+      theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+
+      // Parallax scrolling
+      // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+      // parallaxBackgroundSize: '2100px 900px',
+
+      // Optional libraries used to extend on reveal.js
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      ]
+      });
+
+    </script>
+
+  </body>
+</html>
