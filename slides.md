@@ -319,6 +319,7 @@ select count(*) from T, S where T.key_col = S.key_col;
 - インデックス対応
 - 書き込みトランザクション対応
 - MySQL/MariaDBの高速な並列トランザクションを利用して、SQLiteでは到達できない境地に達したい
+- Connect strage engineにSQLiteサポート追加?
 
 ---
 
