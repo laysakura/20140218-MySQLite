@@ -48,7 +48,7 @@ SQLiteのDBファイルを扱うMySQL/MariaDBストレージエンジンエン�
 
 ![VDBE](/img/vdbe_use.png)
 
-- [VDBE (Virtual Database Engine)](http://www.sqlite.org/vdbe.html)の機構が原因
+- [VDBE (Virtual Database Engine)](http://www.sqlite.org/vdbe.html)の機構が大きな原因
   - SQLはVDBE命令列に変換されて実行される
   - VDBE命令間をまたいだ操作のためにメモリ操作が頻発
   - VDBEは改変が困難
@@ -59,8 +59,8 @@ SQLiteのDBファイルを扱うMySQL/MariaDBストレージエンジンエン�
 
 ## MySQLiteの開発経緯
 
-- 「SQLiteを改善する」未踏では改善に踏み切れなかった
-- 未踏ではSQLiteのクエリ実行系の改善は(ほぼ)諦め、ページャ部分を高速化
+- 「SQLiteを改善する」未踏ではクエリ実行系の抜本的な改善に踏み切れなかった
+- 未踏ではページャ部分を高速化
   - フルスキャンの合成ベンチマークで最大5.0倍の高速化
 - クエリ実行系は外部のものを利用するアプローチを構想し、DeNAインターン(と趣味)でMySQLiteを実装
   - **ソートやGroup-byクエリで高速化を実現**
@@ -127,9 +127,90 @@ mysql> select * from T0;
 
 ---
 
+## 発表アウトライン
+
+1. 開発背景
+1. デモ
+1. **仕組み**
+1. 現状
+1. 評価
+1. まとめ
+
+---
+
+## MySQLiteの役割 (再掲)
+
+![MySQLiteコンポーネント](/img/mysqlite_component.png)
+
+SQLiteのDBファイルを読み書きし、クエリ実行はMySQL/MariaDBに任せる
+
+---
+
+## 動作の流れ
+
+1. `create table T engine=mysqlite file_name='a.sqlite,T'`
+   - ストレージエンジンが `a.sqlite` ファイルをオープン
+1. `select * from T`
+   - ストレージエンジン中の1行読出す関数 (`next`) でSQLite DBファイルから `T` のレコードを順々に読む
+   - 読んだレコードは保持されず、**データの実体は常にSQLite DB**
+
+---
+
+## SQLite DBファイルのパーズ
+
+- SQLite DBファイルの構成が解析できている必要がある
+- [公式ページに詳しいドキュメント](http://www.sqlite.org/fileformat2.html) がある
+- 未踏期間に [SQLiteDbVisualizer](https://github.com/laysakura/SQLiteDbVisualizer) を作って慣れた
+
+![SQLiteDbVisualizer](/img/SQLiteDbVisualizer.png)
+
+---
+
 ## SQLite DBファイルの排他制御
 
 ![SQLite DBファイルの排他制御](/img/lock.png)
+
+- SQLite DBファイルのアクセス競合が、`mysql`クライアント同士とも`sqlite3`プロセスとも起こり得る
+- `fcntl(2)` によるファイルロックで reader-writer ロック
+  - SQLiteも `fcntl(2)` を使用している
+
+---
+
+## MariaDBに助けられた話(1)
+
+- SQLiteのスキーマ情報は、MySQL/MariaDB側にもコピーしなければならない
+- SQLiteから`CREATE TABLE`や`CREATE INDEX`のようなDDLは得られる
+- **ストレージエンジンの中で** DDLから実際にスキーマを作成するには?
+  - ストレージエンジンの中では普通はSQLは実行できない
+
+---
+
+## MariaDBに助けられた話(2)
+
+- MariaDBには`init_from_sql_statement_string()`という謎APIが
+  - **MySQLにはない**
+  - ストレージエンジンの中からDDLを実行してスキーマ作成するための(変態)API
+- MariaDBは開発者にも優しい(!?)
+
+---
+
+## 発表アウトライン
+
+1. 開発背景
+1. デモ
+1. 仕組み
+1. **現状**
+1. 評価
+1. まとめ
+
+---
+
+## 現状の開発状況
+
+- フルスキャンクエリのみ
+- インデックススキャン, 書込トランザクションは未実装
+  - インデックススキャンは、SQLite DBファイルのインデックス構造が分かっているので比較的容易に対応できる
+  - 書込トランザクションも前述の排他制御を含め、一部実装中(ただしデバッグに苦戦しそう)
 
 ---
 
@@ -237,41 +318,8 @@ select count(*) from T, S where T.key_col = S.key_col;
 - フルスキャン実装の高速化
 - インデックス対応
 - 書き込みトランザクション対応
+- MySQL/MariaDBの高速な並列トランザクションを利用して、SQLiteでは到達できない境地に達したい
 
 ---
 
-## todo
-
-- 背景
-  - SQLiteのクエリ実行が低速
-    - DB => ページ読込(Pager) => クエリプラン => クエリ実行 っていう絵
-    - VDBEっていう仕組みが、各vdbe間の遷移の際にメモリコピーを多発
-      <!-- vdbeのsortでの例を見せて、ループしてるから本当にメモリコピが多いことを -->
-  - 未踏では、Pagerを一部改良し、フルスキャン性能を上昇
-    - 合成ベンチマークで5.0倍高速化
-    - でも本当はクエリ実行系を速くしたかった
-  - クエリ実行系をMySQLと置き換えれば速くなるのでは! => 実際これくらい速くなった
-- デモ
-  - 動作を見せるためのデモ
-  - **localhostで動くようにしとかなきゃ!**
-- 仕組み
-  - 背景で使った、MySQLとの置き換え図
-  <!-- - 何でMySQLの実行系は速いの? => 調べる時間ないなぁ・・・ -->
-  - SQLiteのファイル構成をチラッと話す(可視化を見せる?)
-  - mmapでがっつり読んでる
-  - 書き込みの工夫(実装中)
-    - sqlite3 プロセスとの競合 => ファイルロック, shared lock
-    - トランザクション開始時にファイルロックをとり、トランザクションcommit時にwrite, unlock
-    - mysql プロセスとの競合 => 同じように
-      本当はファイルロックより再粒度なロックを使いたいが、、、実装を楽にするため
-  - maria db ならでは部分
-- 現状
-  - フルスキャンクエリのみ
-  - index無理、write無理
-  - proof of concept
-- 評価
-  - sort, group by 勝ってる系(もっと増やしたい)
-  - fullscan, join 負けてる系
-    join負けてるの、ずっとdisk ioがあるからかな? fullscanと同じ原因だと言って、fullscanを速くする方法も提示し、その場を収めたい
-  - もうちょいまともなクエリ
-  - ていうか今この瞬間にfullscanを速くしたい
+Thank you for listening!
