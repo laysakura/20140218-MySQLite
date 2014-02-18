@@ -32,13 +32,13 @@
 
 ## SQLiteのクエリ実行は低速
 
-![SQLiteコンポーネント](/img/sqlite_component.png)
+![SQLiteコンポーネント](img/sqlite_component.png)
 
 ---
 
 ## 高速なMySQL/MariaDBのクエリ実行系を利用
 
-![MySQLiteコンポーネント](/img/mysqlite_component.png)
+![MySQLiteコンポーネント](img/mysqlite_component.png)
 
 SQLiteのDBファイルを扱うMySQL/MariaDBストレージエンジンエンジンを開発
 
@@ -46,7 +46,7 @@ SQLiteのDBファイルを扱うMySQL/MariaDBストレージエンジンエン�
 
 ## なぜSQLiteクエリ実行は遅いのか
 
-![VDBE](/img/vdbe_use.png)
+![VDBE](img/vdbe_use.png)
 
 - [VDBE (Virtual Database Engine)](http://www.sqlite.org/vdbe.html)の機構が大きな原因
   - SQLはVDBE命令列に変換されて実行される
@@ -140,7 +140,7 @@ mysql> select * from T0;
 
 ## MySQLiteの役割 (再掲)
 
-![MySQLiteコンポーネント](/img/mysqlite_component.png)
+![MySQLiteコンポーネント](img/mysqlite_component.png)
 
 SQLiteのDBファイルを読み書きし、クエリ実行はMySQL/MariaDBに任せる
 
@@ -162,13 +162,13 @@ SQLiteのDBファイルを読み書きし、クエリ実行はMySQL/MariaDBに�
 - [公式ページに詳しいドキュメント](http://www.sqlite.org/fileformat2.html) がある
 - 未踏期間に [SQLiteDbVisualizer](https://github.com/laysakura/SQLiteDbVisualizer) を作って慣れた
 
-![SQLiteDbVisualizer](/img/SQLiteDbVisualizer.png)
+![SQLiteDbVisualizer](img/SQLiteDbVisualizer.png)
 
 ---
 
 ## SQLite DBファイルの排他制御
 
-![SQLite DBファイルの排他制御](/img/lock.png)
+![SQLite DBファイルの排他制御](img/lock.png)
 
 - SQLite DBファイルのアクセス競合が、`mysql`クライアント同士とも`sqlite3`プロセスとも起こり得る
 - `fcntl(2)` によるファイルロックで reader-writer ロック
@@ -263,7 +263,7 @@ select count(*) from T;
 
 ## SQLiteとの速度比較1 - 結果
 
-![SQLiteとの速度比較1](/img/sort-group-scan.png)
+![SQLiteとの速度比較1](img/sort-group-scan.png)
 
 - 単純なスキャンは遅く、それ以外は速い
   - スキャンが遅いのはストレージエンジン実装最適化不足 :P
@@ -285,7 +285,7 @@ select count(*) from T, S where T.key_col = S.key_col;
 
 ## SQLiteとの速度比較2 - 結果
 
-![SQLiteとの速度比較2](/img/join.png)
+![SQLiteとの速度比較2](img/join.png)
 
 - Joinで負けているが、内部表T(250,000行)のスキャンを外部表S(100行)の行数分行ったからと予想
   - 250,000行のスキャン => 0.0343秒(Scan-only結果から計算)
